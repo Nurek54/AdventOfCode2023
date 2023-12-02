@@ -1,6 +1,6 @@
 import os
 
-file_path = r"C:\Users\g_sie\OneDrive\Pulpit\test.txt"
+file_path = r"C:\Users\g_sie\OneDrive\Pulpit\AoC_Day1_Input.txt"
 
 with open(file_path, 'r') as file:
     input_str = file.read()
