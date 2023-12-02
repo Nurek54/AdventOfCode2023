@@ -1,8 +1,8 @@
 import os
 
-file_path = r"C:\Users\g_sie\OneDrive\Pulpit\AoC_Day1_Input.txt"
+file_name = "AoC_Day1_Input.txt"
 
-with open(file_path, 'r') as file:
+with open(file_name, 'r') as file:
     input_str = file.read()
 
 lines = input_str.strip().split('\n')
