@@ -63,7 +63,6 @@ def find_lowest_location(seeds, conversion_maps):
 
     return min(current_numbers)
 
-# Replace 'your_input.txt' with the path to your text file containing the puzzle input
 file_path = 'AoC_Day5_Input.txt'
 seeds, conversion_maps = read_input(file_path)
 
