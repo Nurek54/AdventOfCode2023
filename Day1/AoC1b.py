@@ -46,4 +46,4 @@ for string in data:
     calibration = first_digit*10 + second_digit
     count += calibration
 
-print("Part 2: ", count)
+print(count)
