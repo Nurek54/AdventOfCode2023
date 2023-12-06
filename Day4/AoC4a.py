@@ -1,15 +1,15 @@
-ll = [x for x in open("AoC_Day4_Input.txt").read().strip().split('\n')]
-p1 = 0
-multiplier = [1 for i in ll]
-p2 = 0
-for i,l in enumerate(ll):
-	winning = set([int(x) for x in l.split(":")[1].split("|")[0].strip().split()])
-	have = [int(x) for x in l.split("|")[1].strip().split()]
-	have = [x for x in have if x in winning]
-	if len(have):
-		p1 += 2**(len(have)-1)
-	mymult = multiplier[i]
-	for j in range(i+1,min(i+len(have)+1,len(ll))):
-		multiplier[j]+=mymult
-	p2 += mymult
-print(p1)
+lines = open("AoC_Day4_Input.txt").read().strip().split('\n')
+
+part1_result = 0
+multiplier = [1 for _ in lines]
+part2_result = 0
+
+for i, line in enumerate(lines):
+    winning_set = set([int(x) for x in line.split(":")[1].split("|")[0].strip().split()])
+    have_list = [int(x) for x in line.split("|")[1].strip().split()]
+    have_list = [x for x in have_list if x in winning_set]
+
+    if len(have_list):
+        part1_result += 2**(len(have_list) - 1)
+
+print(part1_result)
