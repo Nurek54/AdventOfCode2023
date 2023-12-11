@@ -1,40 +1,44 @@
-def read_data(file_path):
-    with open(file_path) as file:
-        return [list(line) for line in file.read().split("\n")]
+import sys
+import itertools
 
-def calculate_distance(stars, expand, expand_col):
-    distance = 0
-    distance2 = 0
+# Read input from the specified file
+with open("AoC_Day11_Input.txt", 'r') as file:
+    lines = [line.strip() for line in file]
 
-    for i in range(len(stars) - 1):
-        for j in range(i + 1, len(stars)):
-            (x1, y1), (x2, y2) = stars[i], stars[j]
+def empty_rows(lines):
+    empty = []
+    current = 0
+    for i, line in enumerate(lines):
+        if "#" not in line:
+            current += 1
+        empty.append(current)
+    return empty
 
-            for num in expand:
-                if x1 < num < x2 or x2 < num < x1:
-                    distance += 1
-                    distance2 += 999999
+def transpose(lines):
+    return list(zip(*lines))
 
-            for num in expand_col:
-                if y1 < num < y2 or y2 < num < y1:
-                    distance += 1
-                    distance2 += 999999
+def find_galaxies(lines):
+    galaxies = []
+    for j, row in enumerate(lines):
+        for i, c in enumerate(row):
+            if c == "#":
+                galaxies.append((j, i))
+    return galaxies
 
-            distance += abs(x1 - x2) + abs(y2 - y1)
+def shortest(sj, si, j, i, rows, cols, expand):
+    dist = abs(j - sj) + abs(i - si)
+    dist += (expand - 1) * (rows[max(j, sj)] - rows[min(j, sj)])
+    dist += (expand - 1) * (cols[max(i, si)] - cols[min(i, si)])
+    return dist
 
-    return distance, distance2
+def all_distances(galaxies, rows, cols, expand):
+    ans = 0
+    for (j, i), (sj, si) in itertools.combinations(galaxies, 2):
+        ans += shortest(j, i, sj, si, rows, cols, expand)
+    return ans
 
-def main():
-    file_path = "AoC_Day11_Input.txt"
-    data = read_data(file_path)
-
-    expand_rows = [x for x, line in enumerate(data) if all(char == "." for char in line)]
-    expand_cols = [col for col in range(len(data[0])) if all(data[row][col] == "." for row in range(len(data)))]
-    stars = [(x, y) for x, line in enumerate(data) for y, col in enumerate(line) if col == "#"]
-
-    distance, distance2 = calculate_distance(stars, expand_rows, expand_cols)
-
-    print("Part 2:", distance2)
-
-if __name__ == "__main__":
-    main()
+rows = empty_rows(lines)
+cols = empty_rows(transpose(lines))
+galaxies = find_galaxies(lines)
+print("Part 1: ",all_distances(galaxies, rows, cols, 2))
+print("Part 2: ",all_distances(galaxies, rows, cols, 1000000))
