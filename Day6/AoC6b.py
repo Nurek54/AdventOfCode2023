@@ -1,12 +1,14 @@
 import math
 
-with open("AoC_Day6_Input.txt", "r") as f:
-    lines = f.readlines()
+def read_input(file_path):
+    with open(file_path, "r") as f:
+        lines = f.readlines()
 
-times = lines[0].split(": ")[1].strip().split()
-times = [int(t) for t in times]
-distances = lines[1].split(": ")[1].strip().split()
-distances = [int(d) for d in distances]
+    times = [int(t) for t in lines[0].split(": ")[1].strip().split()]
+    distances = [int(d) for d in lines[1].split(": ")[1].strip().split()]
+
+    return times, distances
+
 
 def ways_to_win(time, record_distance):
     ways = 0
@@ -18,9 +20,18 @@ def ways_to_win(time, record_distance):
             ways += 1
     return ways
 
-total_ways = [ways_to_win(t, d) for t, d in zip(times, distances)]
 
-time = int("".join([str(t) for t in times]))
-distance = int("".join([str(d) for d in distances]))
+def main(file_path):
+    times, distances = read_input(file_path)
 
-print(f"Part 2: {ways_to_win(time, distance)}")
+    total_ways = [ways_to_win(t, d) for t, d in zip(times, distances)]
+
+    time = int("".join([str(t) for t in times]))
+    distance = int("".join([str(d) for d in distances]))
+
+    result = ways_to_win(time, distance)
+    print(f"Part 2: {result}")
+
+
+file_path = "AoC_Day6_Input.txt"
+main(file_path)

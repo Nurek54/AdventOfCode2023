@@ -10,10 +10,19 @@ def evaluate_hand_part2(hand_str):
         patterns.append(pattern_index)
     return max(patterns), hand_values
 
-lines = [line for line in open('AoC_Day7_Input.txt').read().split('\n') if line.strip()]
+def read_input(file_path):
+    lines = [line for line in open(file_path).read().split('\n') if line.strip()]
+    return [(hand, int(score)) for hand, score in (line.split() for line in lines)]
 
-hands_and_scores_part2 = sorted((evaluate_hand_part2(hand), int(score)) for hand, score in (line.split() for line in lines))
-total_score_part2 = 0
-for i, (hand_value, score) in enumerate(hands_and_scores_part2):
-    total_score_part2 += i * score + score
-print('Part 2:', total_score_part2)
+def calculate_total_score_part2(hands_and_scores):
+    hands_and_scores_part2 = sorted((evaluate_hand_part2(hand), score) for hand, score in hands_and_scores)
+    total_score_part2 = sum(i * score + score for i, (_, score) in enumerate(hands_and_scores_part2))
+    return total_score_part2
+
+def main(file_path):
+    hands_and_scores = read_input(file_path)
+    total_score_part2 = calculate_total_score_part2(hands_and_scores)
+    print('Part 2:', total_score_part2)
+
+file_path = 'AoC_Day7_Input.txt'
+main(file_path)

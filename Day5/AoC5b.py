@@ -1,13 +1,17 @@
-with open('AoC_Day5_Input.txt', 'r') as file:
-    inp = file.read()
+def read_input(file_path):
+    with open(file_path, 'r') as file:
+        inp = file.read()
 
-parts = inp.split("\n\n")
-seeds = [int(x) for x in parts[0].split(":")[1].split()]
-ref = []
-for i in range(1, len(parts)):
-    ref.append([[int(x) for x in s.split()] for s in parts[i].split("\n")[1:]])
+    parts = inp.split("\n\n")
+    seeds = [int(x) for x in parts[0].split(":")[1].split()]
+    ref = []
+    for i in range(1, len(parts)):
+        ref.append([[int(x) for x in s.split()] for s in parts[i].split("\n")[1:]])
 
-def get_state(seed_num):
+    return seeds, ref
+
+
+def get_state(seed_num, ref):
     cur = seed_num
     for i in range(len(ref)):
         for j in range(len(ref[i])):
@@ -16,10 +20,12 @@ def get_state(seed_num):
                 break
     return cur
 
+
 def intersect(a, b, c, d):
     return not (b < c or d < a)
 
-def get_min(ranges):
+
+def get_min(ranges, ref):
     for i in range(len(ref)):
         new_ranges = []
         for j in range(len(ref[i])):
@@ -43,8 +49,16 @@ def get_min(ranges):
         ranges = cut_ranges + new_ranges
     return min(r[0] for r in ranges) if ranges else float('inf')
 
-rs = []
-for i in range(0, len(seeds), 2):
-    rs.append((seeds[i], seeds[i + 1] + seeds[i] - 1))
 
-print(get_min(rs))
+def solve_problem(file_path):
+    seeds, ref = read_input(file_path)
+
+    rs = [(seeds[i], seeds[i + 1] + seeds[i] - 1) for i in range(0, len(seeds), 2)]
+
+    result = get_min(rs, ref)
+    print("Part 1:", result)
+
+
+file_path = 'AoC_Day5_Input.txt'
+solve_problem(file_path)
+

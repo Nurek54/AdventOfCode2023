@@ -8,31 +8,19 @@ def read_input(file_path):
     current_section = None
 
     for line in lines:
-        if line.startswith("seeds:"):
-            seeds = list(map(int, line.split()[1:]))
-        elif line.startswith("seed-to-soil map:"):
-            current_section = "seed-to-soil"
-            conversion_maps[current_section] = []
-        elif line.startswith("soil-to-fertilizer map:"):
-            current_section = "soil-to-fertilizer"
-            conversion_maps[current_section] = []
-        elif line.startswith("fertilizer-to-water map:"):
-            current_section = "fertilizer-to-water"
-            conversion_maps[current_section] = []
-        elif line.startswith("water-to-light map:"):
-            current_section = "water-to-light"
-            conversion_maps[current_section] = []
-        elif line.startswith("light-to-temperature map:"):
-            current_section = "light-to-temperature"
-            conversion_maps[current_section] = []
-        elif line.startswith("temperature-to-humidity map:"):
-            current_section = "temperature-to-humidity"
-            conversion_maps[current_section] = []
-        elif line.startswith("humidity-to-location map:"):
-            current_section = "humidity-to-location"
+        words = line.split()
+        if not words:
+            continue  # Skip empty lines
+        if words[0] == "seeds:":
+            seeds = list(map(int, words[1:]))
+        elif len(words) > 0 and (words[0] == "seed-to-soil" or words[0] == "soil-to-fertilizer" or \
+                                 words[0] == "fertilizer-to-water" or words[0] == "water-to-light" or \
+                                 words[0] == "light-to-temperature" or words[0] == "temperature-to-humidity" or \
+                                 words[0] == "humidity-to-location"):
+            current_section = words[0]
             conversion_maps[current_section] = []
         elif current_section:
-            conversion_maps[current_section].append(list(map(int, line.split())))
+            conversion_maps[current_section].append(list(map(int, words)))
         else:
             current_section = None
 
@@ -41,12 +29,10 @@ def read_input(file_path):
 def convert_number(number, conversion_maps):
     for section, maps in conversion_maps.items():
         for conversion_map in maps:
-            if conversion_map:
-                dest_start, source_start, length = conversion_map if len(conversion_map) == 3 else (conversion_map[0], 0, 1)
-                if number >= source_start and number < source_start + length:
-                    return dest_start + (number - source_start)
+            dest_start, source_start, length = conversion_map if len(conversion_map) == 3 else (conversion_map[0], 0, 1)
+            if source_start <= number < source_start + length:
+                return dest_start + (number - source_start)
     return number
-
 
 def find_lowest_location(seeds, conversion_maps):
     current_numbers = seeds.copy()
@@ -55,11 +41,7 @@ def find_lowest_location(seeds, conversion_maps):
                     "water-to-light", "light-to-temperature", "temperature-to-humidity",
                     "humidity-to-location"]:
         maps = conversion_maps.get(section, [])
-        next_numbers = []
-        for number in current_numbers:
-            next_number = convert_number(number, {section: maps})
-            next_numbers.append(next_number)
-        current_numbers = next_numbers
+        current_numbers = [convert_number(number, {section: maps}) for number in current_numbers]
 
     return min(current_numbers)
 
@@ -67,4 +49,4 @@ file_path = 'AoC_Day5_Input.txt'
 seeds, conversion_maps = read_input(file_path)
 
 result = find_lowest_location(seeds, conversion_maps)
-print(result)
+print("Part 1:", result)

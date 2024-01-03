@@ -49,4 +49,4 @@ for x in range(len(lines)):
         if gear_pos:
             gears[gear_pos].append(n)
 
-print(sum(prod(gn) for gn in gears.values() if len(gn) == 2))
+print("Part 2:", sum(prod(gn) for gn in gears.values() if len(gn) == 2))

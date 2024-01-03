@@ -5,7 +5,7 @@ file_name = "AoC_Day1_Input.txt"
 with open(file_name, 'r') as file:
     input_str = file.read()
 
-lines = input_str.strip().split('\n')
+lines = [line.strip() for line in input_str.split('\n')]
 
 total_sum = 0
 
@@ -18,4 +18,4 @@ for line in lines:
         value = 10 * first_digit + last_digit
         total_sum += value
 
-print(f"The sum of all calibration values is {total_sum}.")
+print("Part 1:", total_sum)

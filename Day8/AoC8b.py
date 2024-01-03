@@ -46,15 +46,15 @@ XXX = (XXX, XXX)
     log.test(part2(values), '6')
 
 
-def run(log, values):    log(part2(values))
-
-
-if __name__ == "__main__":
-
-    fn = "AoC_Day8_Input.txt"
-
-    print(f"Using '{fn}' as input file:")
-    with open(fn) as f:
+def run(log, file_path):
+    with open(file_path) as f:
         values = [x.strip("\r\n") for x in f.readlines()]
 
-    run(print, values)
+    result = part2(values)
+    log(result)
+
+# Specify the file name
+file_name = "AoC_Day8_Input.txt"
+
+print("Part 2:")
+run(print, file_name)

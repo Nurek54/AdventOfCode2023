@@ -1,11 +1,13 @@
-with open('AoC_Day1_Input.txt') as file:
-    data = [i for i in file.read().strip().split("\n")]
+file_name = 'AoC_Day1_Input.txt'
+
+with open(file_name) as file:
+    data = [line.strip() for line in file]
 
 numbers = [
-        "one", "two", "three",
-        "four", "five", "six",
-        "seven", "eight", "nine"
-        ]
+    "one", "two", "three",
+    "four", "five", "six",
+    "seven", "eight", "nine"
+]
 
 count = 0
 
@@ -23,7 +25,7 @@ for string in data:
         for x in range(len(numbers)):
             if string[i:].startswith(numbers[x]):
                 found = True
-                first_digit = x+1
+                first_digit = x + 1
                 break
 
         i += 1
@@ -36,14 +38,14 @@ for string in data:
             break
 
         for x in range(len(numbers)):
-            if string[:j+1].endswith(numbers[x]):
+            if string[:j + 1].endswith(numbers[x]):
                 found = True
-                second_digit = x+1
+                second_digit = x + 1
                 break
 
         j -= 1
 
-    calibration = first_digit*10 + second_digit
+    calibration = first_digit * 10 + second_digit
     count += calibration
 
-print(count)
+print("Part 2:", count)
