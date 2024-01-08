@@ -1,17 +1,12 @@
 import sys
 from collections import deque
 
-# Read the input from the specified file
-file_path = r"AoC_Day23_Input.txt"
-D = open(file_path).read().strip()
-L = D.split('\n')
-G = [[c for c in row] for row in L]
-R = len(G)
-C = len(G[0])
+def load_input(file_path):
+    with open(file_path) as file:
+        data = file.read().strip()
+    return data.split('\n')
 
-sys.setrecursionlimit(10**6)
-
-def solve(part1):
+def solve(part1, G, R, C):
     V = set()
     for r in range(R):
         for c in range(C):
@@ -69,8 +64,17 @@ def solve(part1):
         SEEN[r][c] = False
 
     dfs(start, 0)
-    # print(count)
     return ans
 
-print(solve(True))
-print(solve(False))
+file_path = "AoC_Day23_Input.txt"
+data = load_input(file_path)
+G = [[c for c in row] for row in data]
+R = len(G)
+C = len(G[0])
+
+sys.setrecursionlimit(10**6)
+
+print("Part 1:")
+print(solve(True, G, R, C))
+print("Part 2:")
+print(solve(False, G, R, C))

@@ -3,24 +3,11 @@ def find_next(row):
 
 def read_input(file_path):
     with open(file_path, 'r') as file:
-        rows = [list(map(int, row.split())) for row in file.read().split("\n")]
-    return rows
+        return [list(map(int, row.split())) for row in file.read().split("\n")]
 
 def calculate_total(rows):
-    total = 0
-    for row in rows:
-        total += find_next(row)
-    return total
+    return sum(find_next(row) for row in rows)
 
-def test(log):
-    values = log.decode_values("""
-5 2 9 4
-3 5 8 9
-1 2 6 8
-    """)
-    log.test(calculate_total(values), '16')
-
-# Specify the file name
 file_name = "AoC_Day9_Input.txt"
 
 rows = read_input(file_name)

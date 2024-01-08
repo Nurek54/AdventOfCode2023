@@ -23,7 +23,9 @@ def load(round, height):
 def part1(height, width, round, square):
     return load(tilt(height, width, round, square, 0, -1), height)
 
-with open("AoC_Day14_Input.txt") as file:
+file_name = "AoC_Day14_Input.txt"
+
+with open(file_name) as file:
     input_lines = file.readlines()
 
 height = len(input_lines)
@@ -32,4 +34,4 @@ width = len(input_lines[0].strip())
 square = {(x, y) for y, line in enumerate(input_lines) for x, c in enumerate(line) if c == '#'}
 round = {(x, y) for y, line in enumerate(input_lines) for x, c in enumerate(line) if c == 'O'}
 
-print("Part1: ", part1(height, width, round, square))
+print("Part 1:", part1(height, width, round, square))

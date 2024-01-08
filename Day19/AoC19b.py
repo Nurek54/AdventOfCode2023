@@ -31,7 +31,7 @@ def is_accepted(current_condition, instructions, sss):
                 else:
                     continue
 
-            raise Exception('Invalid condition format')
+            raise Exception('Błąd')
 
         return is_accepted(condition, instructions, sss)
 
@@ -120,7 +120,7 @@ def valid_combinations(current_condition, instructions, sss, index):
 
             return a + b
 
-        raise Exception('Invalid condition format')
+        raise Exception('Błąd')
 
     return valid_combinations(condition, instructions, sss, 0)
 

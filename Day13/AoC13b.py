@@ -1,7 +1,10 @@
-ll = open('AoC_Day13_Input.txt').read().strip().split('\n\n')
+def read_input(file_path):
+    with open(file_path, "r") as file:
+        data = file.read().strip().split('\n\n')
+    return data
 
-def transpose(x):
-    return list(map(list, zip(*x)))
+def transpose(matrix):
+    return list(map(list, zip(*matrix)))
 
 def find_reflection(pattern, non_matches):
     pattern = ["".join(x) for x in pattern]
@@ -23,9 +26,13 @@ def solve(pattern, non_matches):
     if col is not None:
         return col + 1
 
+file_name = "AoC_Day13_Input.txt"
+file_path = file_name
+
+data = read_input(file_path)
 p2 = 0
 
-for i, l in enumerate(ll):
+for i, l in enumerate(data):
     p2 += solve(l, 2)
 
 print("Part 2:", p2)

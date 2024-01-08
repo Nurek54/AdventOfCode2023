@@ -2,19 +2,20 @@ import collections
 import inspect
 import os
 
+def load_input_file(file_path):
+    with open(file_path, "r") as file:
+        return {
+            complex(x, y): tile
+            for y, row in enumerate(file.read().splitlines())
+            for x, tile in enumerate(row.strip())
+        }
+
 cwd = os.path.dirname(os.path.abspath(inspect.stack()[0][1]))
+file_path = os.path.join(cwd, "AoC_Day21_Input.txt")
+grid = load_input_file(file_path)
 
-with open(os.path.join(cwd, "AoC_Day21_Input.txt"), "r") as f:
-    grid = {
-        complex(x, y): tile
-        for y, row in enumerate(f.read().splitlines())
-        for x, tile in enumerate(row.strip())
-    }
-
-
-def get_start(grid=grid):
+def get_start(grid):
     return next(pos for pos, tile in grid.items() if tile == "S")
-
 
 def walk(max_dist, start=get_start(grid), grid=grid):
     queue = collections.deque([(start, 0)])
@@ -39,11 +40,11 @@ def walk(max_dist, start=get_start(grid), grid=grid):
 
     return tiles
 
-def get_garden_tiles(steps):
-    tiles = walk(steps)
+def get_garden_tiles(steps, grid):
+    tiles = walk(steps, get_start(grid), grid)
 
     return sum(
         amount for distance, amount in tiles.items() if distance % 2 == steps % 2
     )
 
-print("Part 1:", get_garden_tiles(64))
+print("Part 1:", get_garden_tiles(64, grid))

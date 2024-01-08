@@ -19,7 +19,6 @@ def process_input(raw_data):
             if "S" in grid_lines[i]:
                 start_x = i
                 start_y = grid_lines[i].find("S")
-    # print(start_x, start_y)
 
     directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
     happiness_patterns = ["-7J", "|LJ", "-FL", "|F7"]
@@ -31,7 +30,6 @@ def process_input(raw_data):
         if 0 <= new_x < num_rows and 0 <= new_y < num_cols and grid_lines[new_x][new_y] in happiness_patterns[i]:
             valid_directions.append(i)
 
-    # print(valid_directions)
     valid_start = 3 in valid_directions  # Part 2
 
     transformations = {
@@ -61,7 +59,6 @@ def process_input(raw_data):
         current_x += directions[current_direction][0]
         current_y += directions[current_direction][1]
 
-    # print(path_length)
     part1_result = path_length // 2
 
     enclosed_regions = 0
@@ -76,16 +73,6 @@ def process_input(raw_data):
 
     return part1_result, enclosed_regions
 
-def test(log):
-    values = log.decode_values("""
-S---
-|L--
--FL-
-|J--
-    """)
-    log.test(process_input(values), ('4', 2))
-
-# Specify the file name
 file_name = "AoC_Day10_Input.txt"
 file_path = os.path.join(file_name)
 
